@@ -15,4 +15,4 @@ test:
   database: brezzan_test
 
 production:
-  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
+  url: <%= ENV['DATABASE_URL'] %>
