@@ -10,7 +10,9 @@ development:
   <<: *default
   database: brezzan_development
 
-
 test:
   <<: *default
   database: brezzan_test
+
+production:
+  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
