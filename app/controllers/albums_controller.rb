@@ -3,6 +3,7 @@ class AlbumsController < ApplicationController
 
   # GET /albums
   def index
+    # byebug
     @albums = Album.where(event_id: params[:event_id])
 
     render json: @albums.to_json(:only => [:id, :name], :methods => [:image_url])
@@ -49,6 +50,6 @@ class AlbumsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def album_params
-      params.permit(:name, :image, :files)
+      params.permit(:name, :image, :files, :event_id)
     end
 end
