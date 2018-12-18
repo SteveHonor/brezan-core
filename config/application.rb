@@ -37,5 +37,16 @@ module Brezzan
         resource '*', headers: :any, methods: [:get, :post, :options]
       end
     end
+
+    config.paperclip_defaults = {
+      :storage => :s3,
+      :preserve_files => true,
+      :s3_credentials => {
+        :access_key_id => 'AKIAJDTHEVSKCQB7R7CA',
+        :secret_access_key => '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',
+        :s3_region => "us-east-1"
+      },
+      :bucket => 'brezan'
+    }
   end
 end

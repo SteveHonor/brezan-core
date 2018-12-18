@@ -5,14 +5,14 @@ default: &default
 
 development:
   <<: *default
-  database: brezzan_development
+  database: brezan_development
   host: db
   username: postgres
   password:
 
 test:
   <<: *default
-  database: brezzan_test
+  database: brezan_test
 
 production:
   url: <%= ENV['DATABASE_URL'] %>
