@@ -1,3 +1,3 @@
 class Client < ApplicationRecord
-  has_secure_password
+  has_many :events, dependent: :delete_all
 end

@@ -1,18 +1,16 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: db
+  username: postgres
+  password:
   pool: 5
 
 development:
   <<: *default
   database: brezan_development
-  host: db
-  username: postgres
-  password:
+
 
 test:
   <<: *default
   database: brezan_test
-
-production:
-  url: <%= ENV['DATABASE_URL'] %>

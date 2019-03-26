@@ -11,7 +11,15 @@ services:
       - .:/brezan
     ports:
       - "3000:3000"
+      - "1025:1025"
     depends_on:
       - db
+    links:
+      - redis
     stdin_open: true
     tty: true
+    environment:
+      REDIS_URL: redis://redis:6379/0
+
+  redis:
+    image: redis

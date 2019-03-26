@@ -39,6 +39,7 @@ class AlbumsController < ApplicationController
 
   # DELETE /albums/1
   def destroy
+    @album.photos.delete_all
     @album.destroy
   end
 

@@ -15,7 +15,7 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def create
-    @client = Client.new(client_params)
+    @client = Client.new(client_params.merge(token: Digest::SHA1.hexdigest([Time.now, rand].join)))
 
     if @client.save
       render json: @client, status: :created, location: @client
@@ -35,6 +35,13 @@ class ClientsController < ApplicationController
 
   # DELETE /clients/1
   def destroy
+    @client.events.each do |ev|
+      ev.albums.map do |al|
+        al.photos.delete_all
+      end
+      ev.albums.delete_all
+    end
+    @client.events.delete_all
     @client.destroy
   end
 
@@ -46,6 +53,6 @@ class ClientsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def client_params
-      params.require(:client).permit(:name, :email, :phone, :password_digest, :password, :password_confirmation)
+      params.require(:client).permit(:name, :email, :phone)
     end
 end

@@ -5,12 +5,22 @@ class EventsController < ApplicationController
   def index
     if params[:email].present?
       client = Client.find_by(email: params[:email])
-      p client
-      p '======================================='
+      client_id = client.id
+    elsif params[:token].present?
+      client = Client.find_by(token: params[:token])
       client_id = client.id
     else
       client_id = params[:client_id]
     end
+    @events = Event.where(client_id: client_id)
+
+    render json: @events
+  end
+
+  def client
+    client = Client.find_by(token: params[:token])
+    client_id = client.id
+
     @events = Event.where(client_id: client_id)
 
     render json: @events
@@ -43,6 +53,12 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
+
+      @event.albums.map do |al|
+        al.photos.delete_all
+      end
+      @event.albums.delete_all
+
     @event.destroy
   end
 
